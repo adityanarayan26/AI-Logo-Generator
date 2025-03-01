@@ -85,7 +85,7 @@ const GenerateLogo = () => {
             ) : (
                 <div className='flex flex-col gap-y-5 justify-center items-center'>
                     {LogoImg ? (
-                        <Image src={LogoImg?.base64Image} alt='LogoImage' className='rounded-lg shadow-lg' width={300} height={200} />
+                        <Image src={LogoImg?.base64Image} alt='LogoImage' className='rounded-lg shadow-lg' width={300} height={200}  loading="lazy"/>
                     ) : Logos.length > 0 ? (
                         <Image
                             src={Logos[Logos.length - 1]?.base64Image}
@@ -93,9 +93,10 @@ const GenerateLogo = () => {
                             className='rounded-lg shadow-lg'
                             width={300}
                             height={200}
+                            loading="lazy"
                         />
                     ) : (
-                        <p><Loader className='text-gray-600 animate-spin size-5 w-full text-center '/></p>
+                        <p><Loader className='text-gray-600 animate-spin size-5 w-full text-center ' /></p>
                     )}
                     <div className='flex gap-x-3'>
 
@@ -117,6 +118,7 @@ const GenerateLogo = () => {
                                         className='rounded-lg shadow-lg'
                                         width={300}
                                         height={200}
+                                         loading="lazy"
                                     />
                                     <div className='absolute top-3  right-3 cursor-pointer'>
 
@@ -126,7 +128,7 @@ const GenerateLogo = () => {
                             ))}
                         </div>
                     </>
-                ) : <p><Loader className='text-gray-600 animate-spin size-5 w-full text-center '/></p>}
+                ) : <p><Loader className='text-gray-600 animate-spin size-5 w-full text-center ' /></p>}
             </div>
         </div>
     );

@@ -51,7 +51,7 @@ const Page = () => {
                 ) : Logos.length > 0 ? (
                     Logos.map((item, index) => (
                         <div key={index}>
-                            <Image src={item?.base64Image} width={300} height={200} alt='logo' className='shadow-xl cursor-pointer hover:border border-primary transition-all ease-linear duration-100' onClick={() => handleDownload((item?.base64Image), FormDataCollection?.title)} />
+                            <Image src={item?.base64Image} width={300} height={200} alt='logo' className='shadow-xl cursor-pointer hover:border border-primary transition-all ease-linear duration-100' onClick={() => handleDownload((item?.base64Image), FormDataCollection?.title)}  loading="lazy"/>
 
 
                         </div>

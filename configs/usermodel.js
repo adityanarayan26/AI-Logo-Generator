@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   logo: {
     type: [{ base64Image: String }],
-    default: [{ base64Image: "default_base64_string_here" }], // Set your default base64 image string
+    default: []
   },
   createdAt: {
     type: Date,

@@ -35,7 +35,7 @@ const Provider2 = ({ children }) => {
 
 
         <Header />
-        <div className=''>
+        <div className='px-10'>
 
           {children}
         </div>

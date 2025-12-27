@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 import { LogOut, User, ChevronDown, Sparkles } from 'lucide-react'
 
 const Header = () => {
-    const { user, signInWithGoogle, signOut } = useAuth()
+    const { user, signInWithGoogle, signOut, loading } = useAuth()
     const [showDropdown, setShowDropdown] = useState(false)
 
     const handleSignIn = async () => {
@@ -36,7 +36,9 @@ const Header = () => {
                     </div>
                 </Link>
 
-                {user ? (
+                {loading ? (
+                    <div className='w-32 h-10 rounded-lg shimmer'></div>
+                ) : user ? (
                     <div className='flex items-center gap-4'>
                         <Link href='/create'>
                             <Button className='btn-primary flex items-center gap-2'>

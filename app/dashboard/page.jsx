@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Download, Loader2, Grid, List, Search } from 'lucide-react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import Loading from '../_components/Loading';
 import { useSelector } from 'react-redux';
 import { saveAs } from 'file-saver';
 import Link from 'next/link';
@@ -33,16 +34,32 @@ const Page = () => {
         }
     };
 
-    const handleDownload = (base64Image, index) => {
-        const byteString = atob(base64Image.split(',')[1]);
-        const mimeString = base64Image.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
+    const handleDownload = async (imageSrc, index) => {
+        if (!imageSrc) return;
+
+        // Handle Base64
+        if (imageSrc.startsWith('data:')) {
+            const byteString = atob(imageSrc.split(',')[1]);
+            const mimeString = imageSrc.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: mimeString });
+            saveAs(blob, `logo-${index + 1}.png`);
+            return;
         }
-        const blob = new Blob([ab], { type: mimeString });
-        saveAs(blob, `logo-${index + 1}.png`);
+
+        // Handle URL
+        try {
+            const response = await fetch(imageSrc);
+            const blob = await response.blob();
+            saveAs(blob, `logo-${index + 1}.png`);
+        } catch (error) {
+            console.error("Error downloading image:", error);
+            window.open(imageSrc, '_blank');
+        }
     };
 
     return (
@@ -115,27 +132,25 @@ const Page = () => {
 
             {/* Gallery */}
             {loading ? (
-                <div className='flex flex-col items-center justify-center py-20'>
-                    <Loader2 className='w-10 h-10 text-purple-500 animate-spin' />
-                    <p className='text-gray-400 mt-4'>Loading your logos...</p>
-                </div>
+                <Loading fullScreen={false} />
             ) : Logos.length > 0 ? (
                 <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'}`}>
                     {Logos.map((item, index) => (
                         <div key={index} className='logo-card group'>
                             <div className={`relative ${viewMode === 'grid' ? 'aspect-square' : 'h-40'}`}>
                                 <Image
-                                    src={item?.base64Image}
+                                    src={item?.image || item?.base64Image}
                                     fill
                                     alt={`Logo ${index + 1}`}
-                                    className='object-cover rounded-2xl'
+                                    className='object-cover rounded-xl'
                                     loading="lazy"
+                                    unoptimized={true}
                                 />
                                 {/* Overlay */}
-                                <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl flex items-end justify-center pb-4'>
+                                <div className='absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4'>
                                     <button
-                                        onClick={() => handleDownload(item?.base64Image, index)}
-                                        className='flex items-center gap-2 px-4 py-2 rounded-xl bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors'
+                                        onClick={() => handleDownload(item?.image || item?.base64Image, index)}
+                                        className='flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors border border-white/10'
                                     >
                                         <Download className='w-4 h-4' />
                                         Download

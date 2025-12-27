@@ -1,10 +1,10 @@
 import "./globals.css";
-import { Host_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import Provider2 from "./provider";
 import ReduxProvider from "./_components/PersistWrapper";
 import { AuthProvider } from "@/lib/AuthContext";
 
-const host_grotesk = Host_Grotesk({
+const inter = Inter({
   subsets: ["latin"],
 });
 
@@ -16,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={host_grotesk.className}>
+      <body className={inter.className}>
         <AuthProvider>
           <ReduxProvider>
             <Provider2>{children}</Provider2>

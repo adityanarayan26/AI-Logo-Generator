@@ -8,6 +8,7 @@ import { Download, Loader2, RefreshCw, Sparkles, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import { saveAs } from 'file-saver';
 import Link from 'next/link';
+import Loading from '../_components/Loading';
 
 const GenerateLogo = () => {
     const FormDataCollection = useSelector((state) => state.DataForm.FormDataCollection);
@@ -71,19 +72,36 @@ const GenerateLogo = () => {
         }
     };
 
-    const handleDownload = (base64Image, title) => {
-        const byteString = atob(base64Image.split(',')[1]);
-        const mimeString = base64Image.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
+    const handleDownload = async (imageSrc, title) => {
+        if (!imageSrc) return;
+
+        // Handle Base64
+        if (imageSrc.startsWith('data:')) {
+            const byteString = atob(imageSrc.split(',')[1]);
+            const mimeString = imageSrc.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: mimeString });
+            saveAs(blob, `${title || 'logo'}.png`);
+            return;
         }
-        const blob = new Blob([ab], { type: mimeString });
-        saveAs(blob, `${title || 'logo'}.png`);
+
+        // Handle URL (Cloudinary/Pollinations)
+        try {
+            const response = await fetch(imageSrc);
+            const blob = await response.blob();
+            saveAs(blob, `${title || 'logo'}.png`);
+        } catch (error) {
+            console.error("Error downloading image:", error);
+            // Fallback: open in new tab
+            window.open(imageSrc, '_blank');
+        }
     };
 
-    const currentLogo = LogoImg?.base64Image || (Logos.length > 0 ? Logos[0]?.base64Image : null);
+    const currentLogo = LogoImg || (Logos.length > 0 ? (Logos[0]?.image || Logos[0]?.base64Image) : null);
 
     return (
         <div className='min-h-screen py-10'>
@@ -107,17 +125,10 @@ const GenerateLogo = () => {
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
                 {/* Generated Logo Display */}
                 <div className='lg:col-span-2'>
-                    <div className='glass-card rounded-3xl p-8'>
+                    <div className='glass-card rounded-2xl p-8'>
                         {loading ? (
-                            <div className='flex flex-col items-center justify-center py-20'>
-                                <div className='relative'>
-                                    <div className='w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 animate-spin'
-                                        style={{ backgroundSize: '200% 200%' }} />
-                                    <div className='absolute inset-2 rounded-full bg-[#0a0a0f]' />
-                                    <Sparkles className='w-8 h-8 text-purple-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />
-                                </div>
-                                <p className='text-xl text-white font-medium mt-6'>Generating Your Logo...</p>
-                                <p className='text-gray-400 mt-2'>This may take a few moments</p>
+                            <div className='min-h-[400px] flex items-center justify-center'>
+                                <Loading fullScreen={false} message="Analyzing prompt & generating logo..." />
                             </div>
                         ) : currentLogo ? (
                             <div className='flex flex-col items-center'>
@@ -129,6 +140,7 @@ const GenerateLogo = () => {
                                         height={400}
                                         className='rounded-2xl'
                                         loading="lazy"
+                                        unoptimized={true}
                                     />
                                 </div>
 
@@ -226,15 +238,16 @@ const GenerateLogo = () => {
                             <div key={index} className='logo-card group'>
                                 <div className='relative aspect-square'>
                                     <Image
-                                        src={item.base64Image}
+                                        src={item.image || item.base64Image}
                                         alt={`Logo ${index + 1}`}
                                         fill
                                         className='object-cover rounded-2xl'
                                         loading="lazy"
+                                        unoptimized={true}
                                     />
                                     <div className='absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl flex items-center justify-center'>
                                         <button
-                                            onClick={() => handleDownload(item.base64Image, `logo-${index + 1}`)}
+                                            onClick={() => handleDownload(item.image || item.base64Image, `logo-${index + 1}`)}
                                             className='p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors'
                                         >
                                             <Download className='w-5 h-5 text-white' />

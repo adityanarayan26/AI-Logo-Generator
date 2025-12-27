@@ -1,7 +1,8 @@
 'use client'
 import Prompt from '@/app/_data/Prompt'
+import Loading from '@/app/_components/Loading'
 import axios from 'axios'
-import { Lightbulb, Loader2, Sparkles, Check } from 'lucide-react'
+import { Lightbulb, Sparkles, Check } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -53,12 +54,8 @@ const LogoIdea = ({ onHandleInputChange, formData }) => {
             </div>
 
             {loading ? (
-                <div className='flex flex-col items-center justify-center py-16'>
-                    <div className='relative'>
-                        <div className='w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse' />
-                        <Loader2 className='w-8 h-8 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin' />
-                    </div>
-                    <p className='text-gray-400 mt-4'>Generating creative ideas...</p>
+                <div className='min-h-[300px] flex items-center justify-center'>
+                    <Loading fullScreen={false} message="Generating creative ideas..." />
                 </div>
             ) : (
                 <div className='grid grid-cols-2 md:grid-cols-3 gap-4 mt-8'>

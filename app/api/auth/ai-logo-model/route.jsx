@@ -1,50 +1,49 @@
 import { AiLogoPrompt } from "@/configs/aimodel"
-import User from "@/configs/usermodel";
+import { saveLogoToUser, getUserByEmail } from "@/lib/firestore";
 import axios from "axios";
 import { NextResponse } from "next/server"
 
 export async function POST(req) {
-  const { prompt, email } = await req.json()
+  const { prompt, email, uid } = await req.json()
+
   try {
     const AiPromptResult = await AiLogoPrompt.sendMessage(prompt)
-
     const AiPrompt = JSON.parse(AiPromptResult.response.text()).prompt
 
+    // Generate logo from AI model
+    const response = await axios.post(
+      'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
+      { inputs: AiPrompt },
+      {
+        headers: {
+          Authorization: "Bearer " + process.env.NEXT_HUGGING_FACE_API_KEY,
+          "Content-Type": "application/json",
+        },
+        responseType: 'arraybuffer'
+      }
+    )
 
-    //generate logo from ai model
-    const response = await axios.post('https://router.huggingface.co/hf-inference/models/strangerzonehf/Flux-Midjourney-Mix2-LoRA', AiPrompt, {
-      headers: {
-        Authorization: "Bearer " + process.env.NEXT_HUGGING_FACE_API_KEY,
-        "Content-Type": "application/json",
-      },
-      responseType: 'arraybuffer'
-    })
-    //convert  to base64 image
-
-
+    // Convert to base64 image
     const buffer = Buffer.from(response.data, 'binary');
     const Base64Image = buffer.toString('base64');
     const base64ImagewithMime = `data:image/png;base64,${Base64Image}`;
- 
 
-    // Store it in the database
-    let user = await User.findOne({ email });
-    if (user) {
-      user.logo.push({ base64Image: base64ImagewithMime });
-      await user.save();
-    } else {
-      // Create a new user if no user exists
-      user = await User.create({
-        email, // Required field
-        logo: [{ base64Image: base64ImagewithMime }],
-        // Add fullname if required by schema, or make it optional
-        // fullname: "Default Full Name" // Uncomment if needed
-      });
+    // Store it in Firestore
+    if (uid) {
+      await saveLogoToUser(uid, base64ImagewithMime);
+    } else if (email) {
+      // Fallback: find user by email
+      const user = await getUserByEmail(email);
+      if (user) {
+        await saveLogoToUser(user.id, base64ImagewithMime);
+      }
     }
 
-    return NextResponse.json({ image: base64ImagewithMime })
+    return NextResponse.json({
+      image: { base64Image: base64ImagewithMime }
+    })
   } catch (e) {
-    return NextResponse.json({ error: e })
+    console.error('Error generating logo:', e);
+    return NextResponse.json({ error: e.message || 'Failed to generate logo' }, { status: 500 })
   }
-
 }

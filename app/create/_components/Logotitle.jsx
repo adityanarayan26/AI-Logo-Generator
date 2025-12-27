@@ -1,12 +1,33 @@
+'use client'
 import React from 'react'
+import { Sparkles } from 'lucide-react'
 
 const Logotitle = ({ title, onHandleInputChange }) => {
     return (
-        <div>
-            <h1 className='text-3xl font-semibold text-primary '>Logotitle</h1>
-            <p className=' font-normal text-gray-500 text-lg mt-4  '>Add your business ,app,website name for a custom logo</p>
-            <input type="text" placeholder='enter your logo name' className='capitalize border rounded-lg p-4 mt-4 w-full outline-none' defaultValue={title} onChange={(e) => onHandleInputChange(e.target.value)} />
-        </div >
+        <div className='space-y-6'>
+            <div className='flex items-center gap-3'>
+                <div className='w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center'>
+                    <Sparkles className='w-6 h-6 text-white' />
+                </div>
+                <div>
+                    <h1 className='text-3xl font-bold text-white'>What's Your Brand Name?</h1>
+                    <p className='text-gray-400'>Enter the name you want for your logo</p>
+                </div>
+            </div>
+
+            <div className='mt-8'>
+                <input
+                    type="text"
+                    placeholder='e.g. TechFlow, Quantum, Aurora...'
+                    defaultValue={title}
+                    className='input-premium text-xl'
+                    onChange={(e) => onHandleInputChange(e.target.value)}
+                />
+                <p className='text-gray-500 text-sm mt-3'>
+                    💡 Tip: Keep it short, memorable, and unique
+                </p>
+            </div>
+        </div>
     )
 }
 

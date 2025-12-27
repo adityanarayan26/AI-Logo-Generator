@@ -1,15 +1,26 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server';
 
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/forum(.*)'])
+// Define protected routes that require authentication
+const protectedRoutes = ['/dashboard', '/generate-logo'];
 
-export default clerkMiddleware(async (auth, req) => {
-    if (isProtectedRoute(req)) await auth.protect()
-})
+export function middleware(request) {
+    const { pathname } = request.nextUrl;
+
+    // Check if the current path is a protected route
+    const isProtectedRoute = protectedRoutes.some(route =>
+        pathname.startsWith(route)
+    );
+
+    // For protected routes, we'll handle auth check on the client side
+    // since Firebase Auth state is managed client-side
+    // The middleware just passes through - actual protection happens in components
+
+    return NextResponse.next();
+}
+
 export const config = {
     matcher: [
-        // Skip Next.js internals and all static files, unless found in search params
         '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-        // Always run for API routes
         '/(api|trpc)(.*)',
     ],
 };

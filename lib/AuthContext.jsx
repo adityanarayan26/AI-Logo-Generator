@@ -50,6 +50,10 @@ export function AuthProvider({ children }) {
             return result.user;
         } catch (error) {
             console.error('Error signing in with Google:', error);
+            if (error.code === 'auth/unauthorized-domain') {
+                const domain = window.location.hostname;
+                alert(`Domain not authorized: ${domain}. Please add this domain to Firebase Console -> Authentication -> Settings -> Authorized Domains.`);
+            }
             throw error;
         }
     };

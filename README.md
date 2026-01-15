@@ -1,52 +1,80 @@
 # AI Logo Generator 🎨
 
-A professional-grade, AI-powered logo generation application built with **Next.js 15**, **Firebase**, and **Pollinations AI**. Create stunning, unique logos for your brand in seconds with a guided wizard and premium UI experience.
+A professional-grade, AI-powered logo generation application built with **Next.js 16**, **Firebase**, and **Gemini 2.0 Flash**. Create stunning, unique logos for your brand in seconds with a guided wizard and premium UI experience.
 
 ![AI Logo Generator Banner](/public/logo.svg)
 
-## ✨ Unique Selling Points (USP)
+## 🤖 AI Models Used
 
-- **Professional & Modern UI**: A "best-in-class" dark theme design using deep zinc/slate tones, glassmorphism, and smooth animations (no generic "bootstrap" look).
-- **Free Unlimited Generation**: Utilizes **Pollinations.ai** for high-quality, free image generation without API cost barriers.
-- **Secure Cloud Storage**: Seamless integration with **Cloudinary** for storing generated logos and **Firestore** for managing user galleries.
-- **Robust Authentication**: Secure Google Sign-In powered by **Firebase Auth**.
-- **User-Centric Workflow**: A guided 5-step wizard to craft the perfect prompt for your logo (Name, Description, Palette, Style, Idea).
+- **Idea & Prompt Engineering**: **Google Gemini 2.0 Flash** (`gemini-2.0-flash`)
+  - Used to brainstorm logo ideas, refine user descriptions, and generate high-quality text prompts for the image generator.
+- **Image Generation**: **Pollinations.ai**
+  - Utilizes advanced diffusion models (like Flux/SDXL) to convert the text prompts into high-resolution logo images.
 
-## 🚀 Features
+## 🔄 Application Workflow
 
-- **Authentication**: Secure login/signup with Google (Firebase Auth).
-- **Logo Creation Wizard**:
-    - Step-by-step guidance.
-    - Curated color palettes and styles.
-    - AI-generated design ideas (Gemini integration).
-- **Instant Generation**: Fast logo generation using Pollinations AI.
-- **Dashboard**:
-    - View your history of generated logos.
-    - Filter and search functionality.
-    - Download logos in PNG format.
-- **Cloud Persistence**: All logos are securely uploaded to Cloudinary on generation.
-- **Responsive Design**: Fully responsive UI working on mobile, tablet, and desktop.
+The application follows a streamlined, user-centric workflow to take you from a vague idea to a polished logo:
+
+1.  **Authentication**:
+    - Users sign in securely using their Google account (powered by Firebase Authentication).
+
+2.  **Dashboard**:
+    - Upon login, users are greeted by a personalized dashboard.
+    - This serves as the central hub to view previously created logos (fetched from Firestore) or start a new creation process.
+
+3.  **Creation Wizard (5 Steps)**:
+    - **Step 1: Identity**: User enters the Brand/Logo Name and a tagline.
+    - **Step 2: Description**: User provides a brief description of their brand or vision.
+    - **Step 3: Color Palette**: User selects a color palette (e.g., "Sunset Warmth", "Cool Blues") which sets the mood.
+    - **Step 4: Design Style**: User chooses a style (e.g., Modern, Vintage, Minimalist).
+    - **Step 5: AI Brainstorming**:
+        - The app sends the collected inputs to **Gemini 2.0 Flash**.
+        - Gemini generates unique, creative logo concepts and design prompts based on the inputs.
+        - The user selects their favorite concept.
+
+4.  **Generation Phase**:
+    - The selected concept is converted into a highly detailed image generation prompt.
+    - This prompt is sent to **Pollinations.ai**.
+    - The AI generates the logo image in real-time.
+
+5.  **Finalization & Storage**:
+    - **Display**: The generated logo is displayed to the user.
+    - **Cloud Storage**: The image is automatically uploaded to **Cloudinary** for permanent hosting.
+    - **Database Entry**: Metadata (image URL, prompt, timestamp) is saved to **Firebase Firestore**.
+    - **Download**: Users can download the final logo in PNG format.
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
-- **Language**: JavaScript / React
-- **Styling**: Tailwind CSS + Custom "Zinc" Dark Theme
-- **Authentication**: Firebase Auth (Google Provider)
-- **Database**: Firebase Firestore
-- **Storage**: Cloudinary
-- **AI Models**:
-    - **Image Generation**: Pollinations.ai (Flux/SDXL models)
-    - **Prompt Enhancement**: Google Gemini API
-- **State Management**: Redux Toolkit (with persistence)
-- **Icons**: Lucide React
+### Core Framework
+- **Next.js 16** (App Router)
+- **React 19**
+- **JavaScript**
 
-## ⚙️ Getting Started
+### Styling & UI
+- **Tailwind CSS**
+- **Lucide React** (Icons)
+- **Shadcn UI** (Components)
+- **Framer Motion** (Animations)
+
+### Backend & Services
+- **Firebase Auth** (Google Sign-In)
+- **Firebase Firestore** (Database)
+- **Cloudinary** (Image Storage)
+- **Axios** (API Requests)
+
+### AI Integration
+- **Google Generative AI SDK** (Gemini)
+- **Pollinations.ai** (Image Gen)
+
+### State Management
+- **Redux Toolkit**
+- **Redux Persist**
+
+## 🚀 Getting Started
 
 ### Prerequisites
-
 - Node.js 18+ installed.
-- A Firebase project (with Auth and Firestore enabled).
+- A Firebase project.
 - A Cloudinary account.
 - A Google Gemini API Key.
 
@@ -63,38 +91,12 @@ A professional-grade, AI-powered logo generation application built with **Next.j
     npm install
     ```
 
-3.  **Configure Environment Variables**:
-    Create a `.env.local` file in the root directory and add:
-
-    ```env
-    # Firebase Configuration
-    NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-    NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-    NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-
-    # Firebase Admin (Service Account)
-    FIREBASE_PROJECT_ID=your_project_id
-    FIREBASE_CLIENT_EMAIL=your_client_email
-    FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n..."
-
-    # Cloudinary
-    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-    CLOUDINARY_API_KEY=your_api_key
-    CLOUDINARY_API_SECRET=your_api_secret
-
-    # AI Services
-    NEXT_GEMINI_API=your_gemini_api_key
-    ```
-
-4.  **Run the development server**:
+3.  **Run the development server**:
     ```bash
     npm run dev
     ```
 
-5.  **Open the app**:
+4.  **Open the app**:
     Navigate to [http://localhost:3000](http://localhost:3000).
 
 ## 📂 Project Structure

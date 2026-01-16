@@ -2,24 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Professional Dark Theme - Deep Slate & Zinc */
+/* Professional Light Theme - Clean Zinc */
 :root {
-  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(24, 24, 27, 0.08);
+  /* zinc-900 at 8% */
 }
 
 @layer base {
   * {
-    @apply border-white/10;
+    @apply border-zinc-200;
   }
 
   body {
-    @apply bg-[#09090b] text-zinc-100 antialiased;
-    /* Zinc-950 */
+    @apply bg-zinc-50 text-zinc-900 antialiased;
+    /* Subtle Grid or Gradient optional, keeping clean for now */
     background-image:
-      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.03) 0%, transparent 40%);
     background-attachment: fixed;
     min-height: 100vh;
   }
@@ -29,57 +30,57 @@
 
   /* Refined Glass Card */
   .glass-card {
-    @apply bg-zinc-900/50 backdrop-blur-md border border-white/5 shadow-xl;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    @apply bg-white/70 backdrop-blur-md border border-zinc-200 shadow-sm;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
   }
 
   /* Header Glass */
   .header-glass {
-    @apply bg-[#09090b]/80 backdrop-blur-lg border-b border-white/5;
+    @apply bg-white/80 backdrop-blur-lg border-b border-zinc-200;
   }
 
   /* Professional Button */
   .btn-primary {
-    @apply relative overflow-hidden bg-white text-black font-medium px-6 py-2.5 rounded-lg transition-all duration-200 hover:bg-zinc-200 active:scale-[0.98];
+    @apply relative overflow-hidden bg-zinc-900 text-white font-medium px-6 py-2.5 rounded-lg transition-all duration-200 hover:bg-zinc-800 active:scale-[0.98] shadow-sm;
   }
 
   .btn-outline {
-    @apply border border-white/10 bg-transparent text-white hover:bg-white/5 active:scale-[0.98] px-6 py-2.5 rounded-lg transition-all duration-200;
+    @apply border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 active:scale-[0.98] px-6 py-2.5 rounded-lg transition-all duration-200;
   }
 
   /* Clean Input */
   .input-premium {
-    @apply w-full px-4 py-3 rounded-lg bg-zinc-900/50 border border-white/10 text-white placeholder-zinc-500 outline-none transition-all duration-200 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50;
+    @apply w-full px-4 py-3 rounded-lg bg-white border border-zinc-200 text-zinc-900 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500;
   }
 
   /* Subtle Gradient Text */
   .text-gradient {
-    @apply bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-500 bg-clip-text text-transparent;
   }
 
   /* Selection Card */
   .selection-card {
-    @apply p-5 rounded-xl cursor-pointer bg-zinc-900/40 border border-white/5 transition-all duration-200 hover:bg-zinc-800/60 hover:border-white/10;
+    @apply p-5 rounded-xl cursor-pointer bg-white border border-zinc-200 transition-all duration-200 hover:border-zinc-400 hover:shadow-md;
   }
 
   .selection-card.selected {
-    @apply bg-indigo-500/10 border-indigo-500/50 ring-1 ring-indigo-500/30;
+    @apply bg-indigo-50 border-indigo-500 ring-1 ring-indigo-500;
   }
 
   /* Logo Card */
   .logo-card {
-    @apply relative overflow-hidden rounded-xl bg-zinc-900 border border-white/5 transition-all duration-200 hover:border-white/20;
+    @apply relative overflow-hidden rounded-xl bg-white border border-zinc-200 transition-all duration-200 hover:border-zinc-300 shadow-sm;
   }
 
   /* Loading Shimmer */
   .shimmer {
-    @apply relative overflow-hidden bg-zinc-800;
+    @apply relative overflow-hidden bg-zinc-100;
   }
 
   .shimmer::after {
     content: '';
     @apply absolute inset-0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
     animation: shimmer 1.5s infinite;
   }
 }
@@ -109,5 +110,121 @@
 
   .animate-slide-down {
     animation: slide-down 0.2s ease-out;
+  }
+
+  /* 3-Dots Loader Styles */
+  .container {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    filter: url(#goo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dot {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .dot-1 {
+    background-color: #9333ea;
+    z-index: 3;
+    animation: dot-1-move 2s ease infinite, index 6s ease infinite;
+  }
+
+  .dot-2 {
+    background-color: #ec4899;
+    z-index: 2;
+    animation: dot-2-move 2s ease infinite, index 6s -4s ease infinite;
+  }
+
+  .dot-3 {
+    background-color: #a855f7;
+    z-index: 1;
+    animation: dot-3-move 2s ease infinite, index 6s -2s ease infinite;
+  }
+}
+
+@theme inline {
+  @keyframes dot-3-move {
+  20% {
+    transform: scale(1);
+    }
+  45% {
+    transform: translateY(-18px) scale(0.45);
+    }
+  60% {
+    transform: translateY(-90px) scale(0.45);
+    }
+  80% {
+    transform: translateY(-90px) scale(0.45);
+    }
+  100% {
+    transform: translateY(0px) scale(1);
+    }
+  }
+  @keyframes dot-2-move {
+  20% {
+    transform: scale(1);
+    }
+  45% {
+    transform: translate(-16px, 12px) scale(0.45);
+    }
+  60% {
+    transform: translate(-80px, 60px) scale(0.45);
+    }
+  80% {
+    transform: translate(-80px, 60px) scale(0.45);
+    }
+  100% {
+    transform: translateY(0px) scale(1);
+    }
+  }
+  @keyframes dot-1-move {
+  20% {
+    transform: scale(1);
+    }
+  45% {
+    transform: translate(16px, 12px) scale(0.45);
+    }
+  60% {
+    transform: translate(80px, 60px) scale(0.45);
+    }
+  80% {
+    transform: translate(80px, 60px) scale(0.45);
+    }
+  100% {
+    transform: translateY(0px) scale(1);
+    }
+  }
+  @keyframes rotate-move {
+  55% {
+    transform: translate(-50%, -50%) rotate(0deg);
+    }
+  80% {
+    transform: translate(-50%, -50%) rotate(360deg);
+    }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+  @keyframes index {
+  0%,
+  100% {
+    z-index: 3;
+    }
+  33.3% {
+    z-index: 2;
+    }
+  66.6% {
+    z-index: 1;
+    }
   }
 }

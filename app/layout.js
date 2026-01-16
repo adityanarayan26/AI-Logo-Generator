@@ -9,14 +9,19 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "AI Logo Maker",
+  title: "Prologo AI - AI Logo Maker",
   description: "Create stunning AI-powered logos for your brand",
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen bg-zinc-50`}>
         <AuthProvider>
           <ReduxProvider>
             <Provider2>{children}</Provider2>

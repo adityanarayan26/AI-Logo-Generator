@@ -47,7 +47,7 @@ const Header = () => {
                             </Button>
                         </Link>
                         <Link href='/dashboard'>
-                            <Button variant='ghost' className='text-gray-300 hover:text-white hover:bg-white/10'>
+                            <Button variant='ghost' className='text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'>
                                 Dashboard
                             </Button>
                         </Link>
@@ -55,7 +55,7 @@ const Header = () => {
                         <div className='relative'>
                             <button
                                 onClick={() => setShowDropdown(!showDropdown)}
-                                className='flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-200'
+                                className='flex items-center gap-2 p-2 rounded-xl hover:bg-zinc-100 transition-all duration-200'
                             >
                                 {user.photoURL ? (
                                     <img
@@ -68,18 +68,18 @@ const Header = () => {
                                         <User className='w-5 h-5 text-white' />
                                     </div>
                                 )}
-                                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`} />
+                                <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`} />
                             </button>
 
                             {showDropdown && (
                                 <div className='absolute right-0 mt-2 w-56 glass-card rounded-xl overflow-hidden animate-slide-down'>
-                                    <div className='p-4 border-b border-white/10'>
-                                        <p className='text-white font-medium truncate'>{user.displayName}</p>
-                                        <p className='text-gray-400 text-sm truncate'>{user.email}</p>
+                                    <div className='p-4 border-b border-zinc-200'>
+                                        <p className='text-zinc-900 font-medium truncate'>{user.displayName}</p>
+                                        <p className='text-zinc-500 text-sm truncate'>{user.email}</p>
                                     </div>
                                     <button
                                         onClick={handleSignOut}
-                                        className='w-full px-4 py-3 flex items-center gap-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors'
+                                        className='w-full px-4 py-3 flex items-center gap-3 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 transition-colors'
                                     >
                                         <LogOut className='w-4 h-4' />
                                         Sign Out

@@ -10,8 +10,8 @@ const Logotitle = ({ title, onHandleInputChange }) => {
                     <Sparkles className='w-6 h-6 text-white' />
                 </div>
                 <div>
-                    <h1 className='text-3xl font-bold text-white'>What's Your Brand Name?</h1>
-                    <p className='text-gray-400'>Enter the name you want for your logo</p>
+                    <h1 className='text-3xl font-bold text-zinc-900'>What's Your Brand Name?</h1>
+                    <p className='text-zinc-500'>Enter the name you want for your logo</p>
                 </div>
             </div>
 
@@ -20,10 +20,10 @@ const Logotitle = ({ title, onHandleInputChange }) => {
                     type="text"
                     placeholder='e.g. TechFlow, Quantum, Aurora...'
                     defaultValue={title}
-                    className='input-premium text-xl'
+                    className='input-premium text-xl bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:border-purple-500 focus:ring-purple-500/20'
                     onChange={(e) => onHandleInputChange(e.target.value)}
                 />
-                <p className='text-gray-500 text-sm mt-3'>
+                <p className='text-zinc-500 text-sm mt-3'>
                     💡 Tip: Keep it short, memorable, and unique
                 </p>
             </div>

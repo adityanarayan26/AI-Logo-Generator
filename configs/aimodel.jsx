@@ -50,25 +50,97 @@ export const AiDesignIdea = model.startChat({
   ],
 });
 
-  export const AiLogoPrompt = model.startChat({
-    generationConfig,
-    history: [
-      {
-        role: "user",
-        parts: [
-          {text: "Generate a text prompt to create Logo for Logo Title/Brand name : indian spices,with description: indian  restaurant, with Color combination of Sunset Warmth, also include the Friendly Curry Powder Person and include Modern Mascot Logos design idea and Referring to this Logo Prompt:A vibrant logo featuring a friendly, animated character with a playful expression. The character is dressed in a classic uniform, complete with a distinctive accessory that adds personality. In one hand, they hold a signature item that represents the brand, while the other elements of the design—such as small decorative touches or natural accents—enhance the overall look. The background consists of a bold, circular design with subtle accents to highlight the character. Below, the brand name is displayed in bold, stylized lettering, with a slight curve and complementary decorative lines. The overall style is fun, welcoming, and full of character.  Give me result in JSON portal with prompt field only"},
-        ],
-      },
-      {
-        role: "model",
-        parts: [
-          {text: "```json\n{\n  \"prompt\": \"Create a modern mascot logo for 'Indian Spices,' an Indian restaurant. The logo should evoke a sense of 'Sunset Warmth' through its color palette (warm oranges, reds, yellows). Feature a friendly, animated 'Curry Powder Person' mascot. The mascot should have a playful expression and hold a spice shaker or a key ingredient prominently. Design elements should include subtle decorative touches reminiscent of Indian art and natural accents. The background should be a bold, circular design with subtle textures. The brand name 'Indian Spices' should be displayed below in bold, stylized lettering with a slight curve and complementary decorative lines. The overall style should be fun, welcoming, and full of character, similar to a classic mascot logo but with a modern twist.\"\n}\n```\n"},
-        ],
-      },
-    ],
-  });
+export const AiLogoPrompt = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Generate a text prompt to create Logo for Logo Title/Brand name : indian spices,with description: indian  restaurant, with Color combination of Sunset Warmth, also include the Friendly Curry Powder Person and include Modern Mascot Logos design idea and Referring to this Logo Prompt:A vibrant logo featuring a friendly, animated character with a playful expression. The character is dressed in a classic uniform, complete with a distinctive accessory that adds personality. In one hand, they hold a signature item that represents the brand, while the other elements of the design—such as small decorative touches or natural accents—enhance the overall look. The background consists of a bold, circular design with subtle accents to highlight the character. Below, the brand name is displayed in bold, stylized lettering, with a slight curve and complementary decorative lines. The overall style is fun, welcoming, and full of character.  Give me result in JSON portal with prompt field only" },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        { text: "```json\n{\n  \"prompt\": \"Create a modern mascot logo for 'Indian Spices,' an Indian restaurant. The logo should evoke a sense of 'Sunset Warmth' through its color palette (warm oranges, reds, yellows). Feature a friendly, animated 'Curry Powder Person' mascot. The mascot should have a playful expression and hold a spice shaker or a key ingredient prominently. Design elements should include subtle decorative touches reminiscent of Indian art and natural accents. The background should be a bold, circular design with subtle textures. The brand name 'Indian Spices' should be displayed below in bold, stylized lettering with a slight curve and complementary decorative lines. The overall style should be fun, welcoming, and full of character, similar to a classic mascot logo but with a modern twist.\"\n}\n```\n" },
+      ],
+    },
+  ],
+});
 
-  
+export const AiLogoDescription = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Generate a short, engaging description/story (max 100 words) for a logo with Title: 'TechNova' and Description: 'A modern tech company specializing in AI'. The logo features a blue and silver circuit board design. JSON format with 'description' field." },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        { text: "```json\n{\n  \"description\": \"TechNova's logo embodies the future of intelligence with its sleek circuit board motif in cool blue and silver tones. The design represents the seamless integration of artificial intelligence into everyday life, symbolizing connectivity, precision, and innovation. It evokes a sense of trust and cutting-edge technology, positioning TechNova as a leader in the digital revolution.\"\n}\n```\n" },
+      ],
+    },
+  ],
+});
+
+export const AiColorSelector = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Given Brand Name: 'EcoFresh', Description: 'Organic fruit delivery', and Palettes: ['Sunset Warmth', 'Forest Greens', 'Ocean Blues']. Select the best palette. JSON format with 'palette' field." },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        { text: "```json\n{\n  \"palette\": \"Forest Greens\"\n}\n```\n" },
+      ],
+    },
+  ],
+});
+
+export const AiStyleSelector = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Given Brand Name: 'PixelPlay', Description: 'Indie game studio', and Styles: ['Cartoon Logo', 'App Logo', 'Modern Mascot Logos', 'Minimalists']. Select the best style. JSON format with 'style' field." },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        { text: "```json\n{\n  \"style\": \"Modern Mascot Logos\"\n}\n```\n" },
+      ],
+    },
+  ],
+});
+
+export const AiIdeaSelector = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Given Brand Name: 'PixelPlay', Description: 'Indie game studio', and Ideas: ['Retro controller icon', 'Pixel art character', 'Joystick monogram', 'Arcade cabinet silhouette']. Select the best idea. JSON format with 'idea' field." },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        { text: "```json\n{\n  \"idea\": \"Pixel art character\"\n}\n```\n" },
+      ],
+    },
+  ],
+});
+
+
 
 
 

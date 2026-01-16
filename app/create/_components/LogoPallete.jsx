@@ -18,8 +18,8 @@ const LogoPallete = ({ formData, onHandleInputChange }) => {
                     <Palette className='w-6 h-6 text-white' />
                 </div>
                 <div>
-                    <h1 className='text-3xl font-bold text-white'>Choose Your Colors</h1>
-                    <p className='text-gray-400'>Select a color palette that represents your brand</p>
+                    <h1 className='text-3xl font-bold text-zinc-900'>Choose Your Colors</h1>
+                    <p className='text-zinc-500'>Select a color palette that represents your brand</p>
                 </div>
             </div>
 
@@ -28,19 +28,19 @@ const LogoPallete = ({ formData, onHandleInputChange }) => {
                     <div
                         key={index}
                         onClick={() => handleSelect(palette.name)}
-                        className={`palette-card ${selected === palette.name ? 'selected' : ''}`}
+                        className={`bg-white border border-zinc-200 p-4 rounded-xl cursor-pointer hover:shadow-md transition-all ${selected === palette.name ? 'ring-2 ring-purple-500 border-purple-500 bg-purple-50' : ''}`}
                     >
                         <div className='flex gap-1 mb-3'>
                             {palette.colors.map((color, i) => (
                                 <div
                                     key={i}
-                                    className='flex-1 h-12 rounded-lg first:rounded-l-xl last:rounded-r-xl transition-transform hover:scale-105'
+                                    className='flex-1 h-12 rounded-lg first:rounded-l-xl last:rounded-r-xl transition-transform hover:scale-105 shadow-sm'
                                     style={{ backgroundColor: color }}
                                 />
                             ))}
                         </div>
                         <div className='flex items-center justify-between'>
-                            <span className='text-white font-medium'>{palette.name}</span>
+                            <span className='text-zinc-700 font-medium'>{palette.name}</span>
                             {selected === palette.name && (
                                 <div className='w-5 h-5 rounded-full bg-purple-500 flex items-center justify-center'>
                                     <Check className='w-3 h-3 text-white' />

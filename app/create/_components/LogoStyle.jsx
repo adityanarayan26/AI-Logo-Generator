@@ -23,8 +23,8 @@ const LogoStyle = ({ onHandleInputChange, formData }) => {
                     <Shapes className='w-6 h-6 text-white' />
                 </div>
                 <div>
-                    <h1 className='text-3xl font-bold text-white'>Choose Your Style</h1>
-                    <p className='text-gray-400'>Select a design style that best represents your brand</p>
+                    <h1 className='text-3xl font-bold text-zinc-900'>Choose Your Style</h1>
+                    <p className='text-zinc-500'>Select a design style that best represents your brand</p>
                 </div>
             </div>
 
@@ -33,14 +33,14 @@ const LogoStyle = ({ onHandleInputChange, formData }) => {
                     <div
                         key={index}
                         onClick={() => handleSelect(design)}
-                        className={`selection-card relative overflow-hidden ${selected === design.title ? 'selected' : ''}`}
+                        className={`bg-white border border-zinc-200 p-3 rounded-xl cursor-pointer hover:shadow-md transition-all ${selected === design.title ? 'ring-2 ring-purple-500 border-purple-500 bg-purple-50' : ''}`}
                     >
                         <div className='relative aspect-square rounded-xl overflow-hidden mb-3'>
                             <Image
                                 src={design.image}
                                 alt={design.title}
                                 fill
-                                className='object-cover transition-transform duration-300 group-hover:scale-110'
+                                className='object-cover transition-transform duration-300 hover:scale-105'
                             />
                             {selected === design.title && (
                                 <div className='absolute top-2 right-2 w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center'>
@@ -48,7 +48,7 @@ const LogoStyle = ({ onHandleInputChange, formData }) => {
                                 </div>
                             )}
                         </div>
-                        <h3 className='text-white font-semibold text-center'>{design.title}</h3>
+                        <h3 className='text-zinc-900 font-semibold text-center'>{design.title}</h3>
                     </div>
                 ))}
             </div>

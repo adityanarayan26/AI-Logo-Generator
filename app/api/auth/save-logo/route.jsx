@@ -5,7 +5,8 @@ import axios from "axios";
 import { NextResponse } from "next/server"
 
 export async function POST(req) {
-    const { logoUrl, email, uid } = await req.json()
+    const reqBody = await req.json()
+    const { logoUrl, email, uid, title, desc } = reqBody
 
     if (!logoUrl) {
         return NextResponse.json({ error: 'Missing logo URL' }, { status: 400 })
@@ -35,12 +36,18 @@ export async function POST(req) {
         const secureUrl = cloudinaryResponse.secure_url;
 
         // Store URL in Firestore
+        const logoData = {
+            image: secureUrl,
+            title: reqBody.title || 'Untitled Logo',
+            desc: reqBody.desc || ''
+        };
+
         if (uid) {
-            await saveLogoToUser(uid, secureUrl);
+            await saveLogoToUser(uid, logoData);
         } else if (email) {
             const user = await getUserByEmail(email);
             if (user) {
-                await saveLogoToUser(user.id, secureUrl);
+                await saveLogoToUser(user.id, logoData);
             }
         }
 

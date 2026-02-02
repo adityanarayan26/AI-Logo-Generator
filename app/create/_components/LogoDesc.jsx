@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { FileText, Sparkles, Loader2 } from 'lucide-react'
+import { FileText, Sparkles, Loader2, Wand2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const LogoDesc = ({ formData, onHandleInputChange }) => {
     const [loading, setLoading] = useState(false);
 
     const handleGenerateDescription = async () => {
         if (!formData?.title) return;
-
 
         setLoading(true);
         try {
@@ -29,38 +29,43 @@ const LogoDesc = ({ formData, onHandleInputChange }) => {
     };
 
     return (
-        <div className='space-y-6'>
-            <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                    <div className='w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center'>
-                        <FileText className='w-6 h-6 text-white' />
-                    </div>
-                    <div>
-                        <h1 className='text-3xl font-bold text-zinc-900'>Describe Your Brand</h1>
-                        <p className='text-zinc-500'>Help our AI understand your vision</p>
-                    </div>
+        <div className='animate-in fade-in slide-in-from-right-8 duration-700'>
+            <div className='flex items-start gap-5 mb-8'>
+                <div className='w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20'>
+                    <FileText className='w-7 h-7 text-blue-600' />
                 </div>
-
-                <button
-                    onClick={handleGenerateDescription}
-                    disabled={loading || !formData?.title}
-                    className='flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-50 border border-purple-200 text-purple-700 hover:bg-purple-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
-                >
-                    {loading ? <Loader2 className='w-4 h-4 animate-spin' /> : <Sparkles className='w-4 h-4' />}
-                    {loading ? 'Generating...' : 'Auto-Generate'}
-                </button>
+                <div className='flex-1'>
+                    <h1 className='text-3xl font-bold text-zinc-900 mb-2'>Describe your vision.</h1>
+                    <p className='text-zinc-500 leading-relaxed'>
+                        Tell us about your industry, audience, and the vibe you're going for.
+                    </p>
+                </div>
             </div>
 
-            <div className='mt-8'>
+            <div className='space-y-4'>
+                <div className="flex justify-between items-end">
+                    <label className='text-sm font-medium text-zinc-700 ml-1'>Brand Description</label>
+                    <button
+                        onClick={handleGenerateDescription}
+                        disabled={loading || !formData?.title}
+                        className='text-xs font-semibold text-purple-600 flex items-center gap-1.5 hover:text-purple-700 disabled:opacity-50 transition-colors'
+                    >
+                        {loading ? <Loader2 className='w-3 h-3 animate-spin' /> : <Wand2 className='w-3 h-3' />}
+                        {loading ? 'Thinking...' : 'Auto-Generate with AI'}
+                    </button>
+                </div>
+
                 <textarea
-                    placeholder='Describe your business, app, or project. What does it do? Who is it for? What feeling should the logo evoke?'
+                    placeholder='e.g. A modern coffee shop specializing in cold brews, targeting young professionals...'
                     value={formData?.description || ''}
-                    className='input-premium min-h-[180px] resize-none text-lg bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:border-purple-500 focus:ring-purple-500/20'
+                    className='input-pro w-full min-h-[160px] p-4 text-base resize-none leading-relaxed'
                     onChange={(e) => onHandleInputChange(e.target.value)}
                 />
-                <p className='text-zinc-500 text-sm mt-3'>
-                    💡 Tip: Be specific about your industry, target audience, and brand personality
-                </p>
+
+                <div className='flex items-start gap-2 text-sm text-zinc-500 bg-zinc-50 p-3 rounded-lg border border-zinc-100'>
+                    <Sparkles className='w-4 h-4 text-amber-500 mt-0.5 shrink-0' />
+                    <span><strong>AI Power:</strong> Being descriptive helps our model choose the right icons and fonts for you.</span>
+                </div>
             </div>
         </div>
     )

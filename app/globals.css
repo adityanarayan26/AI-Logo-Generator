@@ -2,229 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Professional Light Theme - Clean Zinc */
-:root {
-  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(24, 24, 27, 0.08);
-  /* zinc-900 at 8% */
-}
-
 @layer base {
-  * {
-    @apply border-zinc-200;
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 
-  body {
-    @apply bg-zinc-50 text-zinc-900 antialiased;
-    /* Subtle Grid or Gradient optional, keeping clean for now */
-    background-image:
-      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.03) 0%, transparent 40%),
-      radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.03) 0%, transparent 40%);
-    background-attachment: fixed;
-    min-height: 100vh;
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+  
+  h1 { @apply text-4xl sm:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl sm:text-4xl; }
+  h3 { @apply text-2xl; }
 }
 
 @layer components {
-
-  /* Refined Glass Card */
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-md border border-zinc-200 shadow-sm;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  /* Pattern Background */
+  .bg-grid-zinc {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #f4f4f5 1px, transparent 1px),
+      linear-gradient(to bottom, #f4f4f5 1px, transparent 1px);
   }
 
-  /* Header Glass */
-  .header-glass {
-    @apply bg-white/80 backdrop-blur-lg border-b border-zinc-200;
+  /* Glass Effects */
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-sm;
   }
 
-  /* Professional Button */
-  .btn-primary {
-    @apply relative overflow-hidden bg-zinc-900 text-white font-medium px-6 py-2.5 rounded-lg transition-all duration-200 hover:bg-zinc-800 active:scale-[0.98] shadow-sm;
+  .glass-header {
+    @apply bg-white/80 backdrop-blur-md border-b border-zinc-100;
+  }
+  
+  /* Input & Form Elements */
+  .input-pro {
+    @apply h-12 rounded-lg border-zinc-200 bg-white px-4 text-sm outline-none transition-all placeholder:text-zinc-400 focus:border-zinc-400 focus:ring-4 focus:ring-zinc-100;
   }
 
-  .btn-outline {
-    @apply border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 active:scale-[0.98] px-6 py-2.5 rounded-lg transition-all duration-200;
-  }
-
-  /* Clean Input */
-  .input-premium {
-    @apply w-full px-4 py-3 rounded-lg bg-white border border-zinc-200 text-zinc-900 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500;
-  }
-
-  /* Subtle Gradient Text */
-  .text-gradient {
-    @apply bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-500 bg-clip-text text-transparent;
-  }
-
-  /* Selection Card */
-  .selection-card {
-    @apply p-5 rounded-xl cursor-pointer bg-white border border-zinc-200 transition-all duration-200 hover:border-zinc-400 hover:shadow-md;
-  }
-
-  .selection-card.selected {
-    @apply bg-indigo-50 border-indigo-500 ring-1 ring-indigo-500;
-  }
-
-  /* Logo Card */
-  .logo-card {
-    @apply relative overflow-hidden rounded-xl bg-white border border-zinc-200 transition-all duration-200 hover:border-zinc-300 shadow-sm;
-  }
-
-  /* Loading Shimmer */
-  .shimmer {
-    @apply relative overflow-hidden bg-zinc-100;
-  }
-
-  .shimmer::after {
-    content: '';
-    @apply absolute inset-0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-    animation: shimmer 1.5s infinite;
+  /* Gradient Text */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-800 bg-clip-text text-transparent;
   }
 }
 
 @layer utilities {
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-
-    100% {
-      transform: translateX(100%);
-    }
+  .animate-in {
+    animation: animate-in 0.5s ease-out forwards;
   }
-
-  @keyframes slide-down {
-    0% {
+  
+  @keyframes animate-in {
+    from {
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateY(10px);
     }
-
-    100% {
+    to {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-
-  .animate-slide-down {
-    animation: slide-down 0.2s ease-out;
-  }
-
-  /* 3-Dots Loader Styles */
-  .container {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    filter: url(#goo);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dot {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .dot-1 {
-    background-color: #9333ea;
-    z-index: 3;
-    animation: dot-1-move 2s ease infinite, index 6s ease infinite;
-  }
-
-  .dot-2 {
-    background-color: #ec4899;
-    z-index: 2;
-    animation: dot-2-move 2s ease infinite, index 6s -4s ease infinite;
-  }
-
-  .dot-3 {
-    background-color: #a855f7;
-    z-index: 1;
-    animation: dot-3-move 2s ease infinite, index 6s -2s ease infinite;
-  }
-}
-
-@theme inline {
-  @keyframes dot-3-move {
-  20% {
-    transform: scale(1);
-    }
-  45% {
-    transform: translateY(-18px) scale(0.45);
-    }
-  60% {
-    transform: translateY(-90px) scale(0.45);
-    }
-  80% {
-    transform: translateY(-90px) scale(0.45);
-    }
-  100% {
-    transform: translateY(0px) scale(1);
-    }
-  }
-  @keyframes dot-2-move {
-  20% {
-    transform: scale(1);
-    }
-  45% {
-    transform: translate(-16px, 12px) scale(0.45);
-    }
-  60% {
-    transform: translate(-80px, 60px) scale(0.45);
-    }
-  80% {
-    transform: translate(-80px, 60px) scale(0.45);
-    }
-  100% {
-    transform: translateY(0px) scale(1);
-    }
-  }
-  @keyframes dot-1-move {
-  20% {
-    transform: scale(1);
-    }
-  45% {
-    transform: translate(16px, 12px) scale(0.45);
-    }
-  60% {
-    transform: translate(80px, 60px) scale(0.45);
-    }
-  80% {
-    transform: translate(80px, 60px) scale(0.45);
-    }
-  100% {
-    transform: translateY(0px) scale(1);
-    }
-  }
-  @keyframes rotate-move {
-  55% {
-    transform: translate(-50%, -50%) rotate(0deg);
-    }
-  80% {
-    transform: translate(-50%, -50%) rotate(360deg);
-    }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-    }
-  }
-  @keyframes index {
-  0%,
-  100% {
-    z-index: 3;
-    }
-  33.3% {
-    z-index: 2;
-    }
-  66.6% {
-    z-index: 1;
     }
   }
 }

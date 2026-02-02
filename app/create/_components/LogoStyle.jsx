@@ -17,38 +17,51 @@ const LogoStyle = ({ onHandleInputChange, formData }) => {
     }
 
     return (
-        <div className='space-y-6'>
-            <div className='flex items-center gap-3'>
-                <div className='w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center'>
-                    <Shapes className='w-6 h-6 text-white' />
+        <div className='animate-in fade-in slide-in-from-right-8 duration-700'>
+            <div className='flex items-start gap-5 mb-8'>
+                <div className='w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20'>
+                    <Shapes className='w-7 h-7 text-emerald-600' />
                 </div>
                 <div>
-                    <h1 className='text-3xl font-bold text-zinc-900'>Choose Your Style</h1>
-                    <p className='text-zinc-500'>Select a design style that best represents your brand</p>
+                    <h1 className='text-3xl font-bold text-zinc-900 mb-2'>Choose your aesthetic.</h1>
+                    <p className='text-zinc-500 leading-relaxed'>
+                        The visual style determines the feel of your logo.
+                    </p>
                 </div>
             </div>
 
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4 mt-8'>
+            <div className='grid grid-cols-2 sm:grid-cols-3 gap-5'>
                 {LogoDesign?.map((design, index) => (
                     <div
                         key={index}
                         onClick={() => handleSelect(design)}
-                        className={`bg-white border border-zinc-200 p-3 rounded-xl cursor-pointer hover:shadow-md transition-all ${selected === design.title ? 'ring-2 ring-purple-500 border-purple-500 bg-purple-50' : ''}`}
+                        className={`group relative overflow-hidden rounded-2xl border cursor-pointer transition-all duration-300 ${selected === design.title
+                                ? 'border-purple-500 ring-2 ring-purple-500/20 shadow-lg shadow-purple-500/10 bg-white'
+                                : 'border-zinc-200 bg-white hover:border-zinc-300 hover:shadow-lg'
+                            }`}
                     >
-                        <div className='relative aspect-square rounded-xl overflow-hidden mb-3'>
+                        <div className='aspect-square relative'>
                             <Image
                                 src={design.image}
                                 alt={design.title}
                                 fill
-                                className='object-cover transition-transform duration-300 hover:scale-105'
+                                className={`object-cover transition-transform duration-700 ${selected === design.title ? 'scale-105' : 'group-hover:scale-105'}`}
                             />
+                            {/* Overlay Gradient */}
+                            <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60'></div>
+
+                            {/* Selected Check */}
                             {selected === design.title && (
-                                <div className='absolute top-2 right-2 w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center'>
+                                <div className='absolute top-3 right-3 w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center shadow-lg animate-in fade-in zoom-in'>
                                     <Check className='w-4 h-4 text-white' />
                                 </div>
                             )}
+
+                            {/* Title Label */}
+                            <div className='absolute bottom-3 left-3 right-3'>
+                                <span className='text-white font-semibold text-lg tracking-wide'>{design.title}</span>
+                            </div>
                         </div>
-                        <h3 className='text-zinc-900 font-semibold text-center'>{design.title}</h3>
                     </div>
                 ))}
             </div>
